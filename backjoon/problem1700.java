@@ -13,8 +13,8 @@ public class problem {
         int position = 0;
         boolean result = false;
 
-        ArrayList<Integer> tmp = new ArrayList<>();
-        ArrayList<Integer> arrayList = new ArrayList<>();
+        List<Integer> tmp = new ArrayList<>();
+        List<Integer> arrayList = new ArrayList<>();
 
         for (int i = 0; i < k; i++) {
             arrayList.add(scanner.nextInt());
@@ -29,33 +29,9 @@ public class problem {
                 }
             } else {
                 for (int j = 0; j < x; j++) {
-                    for (int z = i; z < k; z++) {
-                        if (tmp.get(j) == arrayList.get(z)) {
-                            if (z > max) {
-                                max = z;
-                                position = j;
-                                result = true;
-                            }
-                        }
-                    }
-                    if (result == false) {
-                        position = j;
-                        max = 0;
-                        continue;
-                    }
-                    result = false;
+                        arrayList.indexOf()
                 }
-                if ( max != 0) {
-                    System.out.println(arrayList.get(i));
-                    tmp.remove(position);
-                    tmp.add(arrayList.get(i));
-                    count++;
-                } else {
-                    tmp.remove(position);
-                    tmp.add(arrayList.get(i));
-                }
-                max = 0;
-                position = 0;
+
             }
         }
         System.out.println(count);
