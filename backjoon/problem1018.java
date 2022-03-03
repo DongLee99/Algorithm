@@ -13,6 +13,7 @@ public class problem {
         find("B", x, y);
         find("W", x, y);
     }
+
     static void find(String tmp, int x, int y) {
         int count = 0;
         for (int i = 0; i < 8; i++) {
@@ -62,7 +63,6 @@ public class problem {
 
         int N_row = N - 7;
         int M_col = M - 7;
-
 
         for (int i = 0; i < N_row; i++) {
             for (int j = 0; j < M_col; j++) {
