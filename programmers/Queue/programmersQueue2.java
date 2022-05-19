@@ -5,7 +5,7 @@ public class Solution {
     public int solution(int[] priorities, int location) {
         Queue<Integer> queue = new ArrayDeque<>();
         for (int priority : priorities) {
-            queue.add(priority);
+            queue.offer(priority);
         }
         int result = 0;
         while(true) {
