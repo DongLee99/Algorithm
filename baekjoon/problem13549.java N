@@ -1,0 +1,53 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+class main {
+
+    public static class Node {
+        public int idx;
+        public int time;
+
+        public Node(int idx, int time) {
+            this.idx = idx;
+            this.time = time;
+        }
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int start = scanner.nextInt();
+        int finish = scanner.nextInt();
+
+        int [] visited = new int[100001];
+        Queue<Node> q = new LinkedList<>();
+        q.add(new Node(start, 1));
+        visited[start] = 1;
+
+        while (!q.isEmpty()) {
+            Node now = q.poll();
+
+            if (now.idx + 1 >= 0 && now.idx + 1 <= 100000) {
+                if (visited[now.idx + 1] == 0 || visited[now.idx+1] > now.time + 1) {
+                    visited[now.idx+1] = now.time + 1;
+                    q.add(new Node(now.idx+1, now.time + 1));
+                }
+            }
+
+            if (now.idx -1 >= 0 && now.idx - 1 <= 100000) {
+                if (visited[now.idx - 1] == 0 || visited[now.idx-1] > now.time + 1) {
+                    visited[now.idx - 1] = now.time + 1;
+                    q.add(new Node(now.idx - 1, now.time + 1));
+                }
+            }
+            if (now.idx * 2 >= 0 && now.idx * 2 <= 100000) {
+                if (visited[now.idx * 2] == 0 || visited[now.idx * 2] > now.time) {
+                    visited[now.idx * 2] = now.time;
+                    q.add(new Node(now.idx * 2, now.time));
+                }
+            }
+        }
+        System.out.println(visited[finish] - 1);
+
+    }
+}
