@@ -1,0 +1,82 @@
+import java.util.Arrays;
+
+class Solution {
+
+    public static String [][] arr;
+    public static int [][] visited;
+    public static int [] dx = {-1, 1, 0, 0};
+    public static int [] dy = {0, 0, -1, 1};
+    public static int Xsize = 0;
+    public static int Ysize = 0;
+    public static int startX = 0;
+    public static int startY = 0;
+    public static int finishX = 0;
+    public static int finishY = 0;
+    public static int MIN = Integer.MAX_VALUE;
+
+    public static int [] goStraight(int x, int y, int directX, int directY) {
+        while(true) {
+            int nextX = x + directX;
+            int nextY = y + directY;
+
+            if (nextX < 0 || nextX >= Xsize || nextY < 0 || nextY >= Ysize || arr[nextX][nextY].equals("D")) {
+                break;
+            }
+            x += directX;
+            y += directY;
+        }
+        return new int[]{x, y};
+    }
+
+    public static void find(int x, int y, int count) {
+        if (arr[x][y].equals("G")) {
+            MIN = Math.min(MIN, count);
+            return;
+        }
+        for (int i = 0; i < 4; i++) {
+            int[] next = goStraight(x, y, dx[i], dy[i]);
+            int cx = next[0];
+            int cy = next[1];
+
+            if (visited[cx][cy] <= count + 1) {
+                continue;
+            }
+
+            visited[cx][cy] = count + 1;
+            find(cx, cy, count + 1);
+        }
+    }
+
+    public int solution(String[] board) {
+        Xsize = board.length;
+        Ysize = board[0].length();
+        arr = new String[Xsize][Ysize];
+        visited = new int[Xsize][Ysize];
+
+        for (int [] ints : visited) {
+            Arrays.fill(ints, Integer.MAX_VALUE);
+        }
+
+        for (int i = 0; i < board.length; i++) {
+            String tmp = board[i];
+            for (int j = 0; j < tmp.length(); j++) {
+                arr[i][j] = String.valueOf(tmp.charAt(j));
+                if (arr[i][j].equals("G")) {
+                    finishX = i;
+                    finishY = j;
+                }
+                if (arr[i][j].equals("R")) {
+                    startX = i;
+                    startY = j;
+                }
+            }
+        }
+
+        visited[startX][startY] = 0;
+        find(startX, startY, 0);
+        if (MIN == Integer.MAX_VALUE) {
+            return -1;
+        }
+        return MIN;
+    }
+}
