@@ -1,112 +1,52 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-class main {
+class Main {
 
     public static int N;
-    public static int L;
-    public static int R;
-    public static int [][] arr;
-    public static int [] dx = {0, 0, 1, -1};
-    public static int [] dy = {1, -1, 0, 0};
-    public static boolean [][] visited;
+    public static int[][] arr;
+    public static String result = "";
 
-    public static void bfs(int x, int y) {
-        Queue<Node> queue = new LinkedList<>();
-        Queue<Node> save = new LinkedList<>();
-        queue.add(new Node(x, y));
-        save.add(new Node(x, y));
-        int peopleCount = arr[x][y];
-        int size = 1;
-        while(!queue.isEmpty()) {
-            Node poll = queue.poll();
-            for (int i = 0; i < 4; i++) {
-                int cx = poll.x + dx[i];
-                int cy = poll.y + dy[i];
-                if (cx >= 0 && cx < N && cy >= 0 && cy < N) {
-                    if (visited[cx][cy] == false) {
-                        if (Math.abs(arr[poll.x][poll.y] - arr[cx][cy]) >= L && Math.abs(arr[poll.x][poll.y] - arr[cx][cy]) <= R) {
-                            visited[cx][cy] = true;
-                            queue.add(new Node(cx, cy));
-                            save.add(new Node(cx, cy));
-                            size++;
-                            peopleCount = peopleCount + arr[cx][cy];
-                        }
-                    }
+    public static void find(int x, int y, int size) {
+        if (check(x, y, size)) {
+            result = result + arr[x][y];
+            return;
+        }
+
+        int newSize = size / 2;
+        result = result + "(";
+        find(x, y, newSize);
+        find(x, y + newSize, newSize);
+        find(x + newSize, y, newSize);
+        find(x + newSize, y + newSize, newSize);
+        result = result + ")";
+    }
+
+    public static boolean check(int x, int y, int size) {
+        int tmp = arr[x][y];
+        for (int i = x; i < x + size; i++) {
+            for (int j = y; j < y + size; j++) {
+                if (tmp != arr[i][j]) {
+                    return false;
                 }
             }
         }
-        while(!save.isEmpty()) {
-            Node poll = save.poll();
-            arr[poll.x][poll.y] = peopleCount / size;
-        }
+        return true;
     }
 
-    public static boolean check() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                Queue<Node> queue = new LinkedList<>();
-                queue.add(new Node(i, j));
-                while(!queue.isEmpty()) {
-                    Node poll = queue.poll();
-                    for (int k = 0; k < 4; k++) {
-                        int cx = poll.x + dx[k];
-                        int cy = poll.y + dy[k];
-                        if (cx >= 0 && cx < N && cy >= 0 && cy < N) {
-                            if (visited[cx][cy] == false) {
-                                if (Math.abs(arr[poll.x][poll.y] - arr[cx][cy]) >= L && Math.abs(arr[poll.x][poll.y] - arr[cx][cy]) <= R) {
-                                    return true; // 공유
-                                }
-                            }
-                        }
-                    }
-                }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        arr = new int[N+1][N+1];
+        for (int i = 1; i <= N; i++) {
+            String tmp = br.readLine();
+            for (int j = 1; j <= N; j++) {
+                arr[i][j] = Integer.parseInt(String.valueOf(tmp.charAt(j-1)));
             }
         }
-        return false; // 공유 X
-    }
-
-    public static class Node {
-        public int x;
-        public int y;
-        public int value;
-
-        public Node(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        N = scanner.nextInt();
-        L = scanner.nextInt();
-        R = scanner.nextInt();
-        arr = new int[N][N];
-        visited = new boolean[N][N];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                arr[i][j] = scanner.nextInt();
-            }
-        }
-        int count = 0;
-        boolean result = true;
-        result = check();
-        while(result) {
-            result = check();
-            if (result == false) {
-                break;
-            }
-            count++;
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    if (visited[i][j] == false) {
-                        visited[i][j] = true;
-                        bfs(i, j);
-                    }
-                }
-            }
-            visited = new boolean[N][N];
-        }
-        System.out.println(count);
+        find(1, 1, N);
+        System.out.println(result);
     }
 }
+
