@@ -1,8 +1,17 @@
 import java.util.*;
 public class Main {
+    public class Node implements Comparator<Node> {
+
+        @Override
+        public int compare(Node o1, Node o2) {
+            return 0;
+        }
+    }
     public static class Solution {
         public static int[] solution(String msg) {
             int[] answer = {};
+            String x = "a";
+            x.toUpperCase();
             HashMap<String, Integer> map = new HashMap<>();
             map.put("A", 1);
             map.put("B", 2);
