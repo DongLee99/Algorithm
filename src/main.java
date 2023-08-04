@@ -1,7 +1,16 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
 import java.util.*;
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        br.readLine();
+        List<Integer> a = new ArrayList<>();
+        Collections.sort(a);
+        StringTo
         int N = scanner.nextInt();
         int K = scanner.nextInt();
         int [] array = new int[N];
