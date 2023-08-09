@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.*;
 
 
@@ -10,27 +11,13 @@ public class Main
 
     public static void main(String args[])
     {
-        Scanner sc = new Scanner(System.in);
-        M = sc.nextInt();
-        N = sc.nextInt();
-        K = sc.nextInt();
-        arr = new int[M];
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < M; i++) {
-            stringBuilder.append(sc.nextInt());
+        int itemsBought = 0;
+        int funds = 100;
+        for (int price = 10; funds >= price; price += 10) {
+            funds -= price;
+            itemsBought++;
         }
-        StringBuilder st = new StringBuilder();
-        if (N < M) {
-            System.out.println("normal");
-            return;
-        }
-        for (int i = 0; i < N; i++) {
-            st.append(sc.nextInt());
-        }
-        if (st.toString().contains(stringBuilder.toString())) {
-            System.out.println("secrete");
-        } else {
-            System.out.println("normal");
-        }
+        System.out.println(itemsBought + "개 구입");
+        System.out.println("잔돈(센트): " + funds);
     }
 }
