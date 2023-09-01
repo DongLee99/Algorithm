@@ -1,0 +1,52 @@
+import java.util.*;
+public class Main {
+    public static int[] colors = {0, 1, 2};
+    public static int N;
+    public static int[] arr;
+    public static int[][] colorPoints;
+    public static int MIN = Integer.MAX_VALUE;
+
+    public static void find(int index) {
+        if (N == index) {
+            int result = 0;
+            for (int i = 0; i < N; i++) {
+                result = result + colorPoints[i][arr[i]];
+            }
+            MIN = Math.min(result, MIN);
+            return;
+        }
+        for (int i = 0; i < 3; i++) {
+            if (index == 0) {
+                arr[index] = i;
+                find(index + 1);
+                arr[index] = 3;
+            } else if (index == N -1) {
+                if (arr[index - 1] != i && arr[0] != i) {
+                    arr[index] = i;
+                    find(index + 1);
+                    arr[index] = 3;
+                }
+            } else {
+                if (arr[index - 1] != i) {
+                    arr[index] = i;
+                    find(index + 1);
+                    arr[index] = 3;
+                }
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        N = sc.nextInt();
+        arr = new int[N];
+        colorPoints = new int[N][3];
+        Arrays.fill(arr, 3);
+        for (int i = 0; i < N; i++) {
+            colorPoints[i][0] = sc.nextInt();
+            colorPoints[i][1] = sc.nextInt();
+            colorPoints[i][2] = sc.nextInt();
+        }
+        find(0);
+        System.out.println(MIN);
+    }
+}

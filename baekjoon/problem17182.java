@@ -41,7 +41,7 @@ public class Main {
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(sb.readLine());
             for (int j = 0; j < N; j++) {
-               map[i][j] = Integer.parseInt(st.nextToken());
+                map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
