@@ -13,7 +13,7 @@ public class Main {
             s.add(sc.nextInt());
         }
         M = sc.nextInt();
-        for (int i = 0; i < M; i++) {
+        for시 (int i = 0; i < M; i++) {
             int tmp = sc.nextInt();
             if (s.contains(tmp)) {
                 System.out.print(1 + " ");
